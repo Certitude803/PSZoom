@@ -39,7 +39,7 @@ function Invoke-ZoomRestMethod {
         [x509Certificate]$Certificate,
         [switch]$SkipCertificateCheck,
         $SslProtocol,
-        [secureString]$Token = $PSZoomToken,
+        [secureString]$Token = (Get-PSZoomToken),
         [string]$UserAgent,
         [switch]$DisableKeepAlive,
         [int]$TimeoutSec,
@@ -127,7 +127,7 @@ function Invoke-ZoomRestMethod {
     $params = Remove-NonPsBoundParameters($params)
     
     if (-not $Token) {
-        Write-Host "No token found. Use Connect-PSZoom to get a global token then try running the command again.`n"
+        Write-Host "No token found. Use Connect-PSZoom to get a token then try running the command again.`n"
     } else {
         $params.Headers = (New-ZoomHeaders -Token $Token)
         Write-Verbose $params.Headers
